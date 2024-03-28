@@ -26,17 +26,18 @@
         },
         created(){
             this.product = this.$store.getters.fnGetProducts.find(item=>item.id == this.$route.params.id)
+
+            if (this.$store.getters.fnGetLogined) {
+                this.showBtn = true
+            } else {
+                this.showBtn = false
+            }
+
             // 개발할때 상세이미지 경로
             this.product.image = '/'+this.product.image 
             
             // build 할때 상세이미지 경로
             // this.product.image = '/starMart/'+this.product.image 
-
-            if (this.$store.getters.fnGetLogined.email) {
-                this.showBtn = true
-            } else {
-                this.showBtn = false
-            }
         },
         methods : {
             onClick(){

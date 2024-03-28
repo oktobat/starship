@@ -45,10 +45,12 @@
             } else {
                this.item = this.$store.getters.fnGetReviewList.find(item=>item.id==this.$route.params.id) 
             }
-            this.$store.commit("hit__Update", this.$route.params.id)
-            if (this.item.writer == this.$store.getters.fnGetLogined.email) {
-               this.showBtn = true
+            if (this.$store.getters.fnGetLogined) {
+                if (this.item.writer == this.$store.getters.fnGetLogined.email) {
+                    this.showBtn = true
+                }
             }
+            this.$store.commit("hit__Update", this.$route.params.id)
         },
         methods : {
             onRemove(id){
