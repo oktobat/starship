@@ -22,7 +22,7 @@ Vue.use(Router)
 
 export default new Router({
     mode:'history',
-    base:'/',
+    // base:'/starMart',
     routes:[ 
         { path:"/", name:"home", component : HomeView },
         { path:"/actor", name:"actor", component : ActorView }, 
@@ -40,5 +40,14 @@ export default new Router({
         { path:"/communityWrite", name:"communityWrite", component : CommunityWriteView },
         { path:"/communityModify/:id", name:"communityModify", component : CommunityModifyView },
         { path:"/communityDetail/:id", name:"communityDetail", component : CommunityDetailView },
-    ]
+    ],
+    scrollBehavior(to, from, savedPosition) {
+        if (savedPosition) {
+          return savedPosition;
+        } else {
+          // 새로운 라우트로 이동 시 페이지 맨 위로 스크롤
+          return { x: 0, y: 0 };
+        }
+    },
+    
 })

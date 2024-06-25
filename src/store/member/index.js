@@ -3,6 +3,7 @@ export default {
         oUser : [ {email:'tsalt@hanmail.net', pw:'1234'}], // [ {email:'', pw:''} ]
         message : false,
         logined : null, // { email:"", pw:"" }
+        prevPath : null,
     },
     mutations : {
         fnRegisterUser(state, payload){
@@ -29,6 +30,9 @@ export default {
                 }
             })
         },
+        savePrevPath(state, payload){
+            state.prevPath = payload
+        },
         fnLogout(state){
             state.logined = null
         },
@@ -48,6 +52,7 @@ export default {
     getters : {
         fnGetOuser : state => state.oUser,
         fnGetMessage : state => state.message,
-        fnGetLogined : state => state.logined
+        fnGetLogined : state => state.logined,
+        fnGetPrevPath : state => state.prevPath,
     }
 }

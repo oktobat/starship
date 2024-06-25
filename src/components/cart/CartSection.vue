@@ -23,13 +23,13 @@
                         <img :src="item.product.image" alt="">
                     </td>
                     <td>
-                        {{ item.product.title}}({{ item.product.price | formatPrice }})
+                        {{ item.product.title}} ({{ item.product.price.toLocaleString() }})
                     </td>
                     <td>
                         <input type="number" v-model="item.qty" @input="onInput($event, item.product.id, item.qty)" min="1">
                     </td>
                     <td>
-                        {{ item.product.price * item.qty | formatPrice }}
+                        {{ (item.product.price * item.qty).toLocaleString()   }}
                     </td>
                     <td>
                         <button type="button" @click="onRemoveItem(item.product.id)">삭제</button>
@@ -44,7 +44,7 @@
             <tfoot>
                 <tr>
                     <td colspan="5">
-                        합계 : {{ calculateTotal | formatPrice }}<br>
+                        합계 : {{ calculateTotal.toLocaleString() }}<br>
                         주문상품수량 : {{ itemCount }}종 {{ allCount }}개
                     </td>
                 </tr>
@@ -94,21 +94,21 @@
                 this.$store.commit("item__Remove", id)
             }
         },
-        filters : {
-            formatPrice(price){   
-                if (!parseInt(price)) { return "" }	
-                if (price > 999) {
-                    let priceString = String(price)
-                    let priceArray = priceString.split("").reverse()
-                    let index = 0 
-                    while (priceArray.length > index+3 ) {	
-                        priceArray.splice(index+3, 0, ",");	
-                        index += 4;	
-                    }
-                    return priceArray.reverse().join("")+"원"
-                }
-            }
-        }
+        // filters : {
+        //     formatPrice(price){   
+        //         if (!parseInt(price)) { return "" }	
+        //         if (price > 999) {
+        //             let priceString = String(price)
+        //             let priceArray = priceString.split("").reverse()
+        //             let index = 0 
+        //             while (priceArray.length > index+3 ) {	
+        //                 priceArray.splice(index+3, 0, ",");	
+        //                 index += 4;	
+        //             }
+        //             return priceArray.reverse().join("")+"원"
+        //         }
+        //     }
+        // }
     }
 </script>
 

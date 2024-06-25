@@ -3,8 +3,8 @@
         <form @submit.prevent="fnRegisterUser">
             <table border="0">
                 <colgroup>
-                    <col>
-                    <col>
+                    <col />
+                    <col />
                 </colgroup>
                 <tbody>
                     <tr>

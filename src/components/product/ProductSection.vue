@@ -5,13 +5,13 @@
             <button @click="sortProduct('price')" :class="{on:flag=='가격순'}">가격순</button>
         </div>
         <transition-group name="translist" tag="ul" class="ulbox">
-            <li v-for="(item) in products" :key="item.id">
+            <!-- <li v-for="(item) in products" :key="item.id">
                 <div class="photo">
-                    <router-link :to="{name:'Id', params:{id:item.id}}"><img :src="item.image" alt=""></router-link>
+                    <router-link :to="{name:'Id', params:{item:item}}"><img :src="item.image" alt=""></router-link>
                 </div>
                 <div class="info">
                     <p><a href="#">{{ item.title }}</a></p>
-                    <p>{{ item.price | formatPrice }}</p>
+                    <p>{{ item.price.toLocaleString() }}</p>
                     <p class="rating">
                         <span v-for="n in 5" :key="n" :class="{active:checkRating(n, item.rating)}">☆</span>
                     </p>
@@ -20,13 +20,47 @@
                     <span v-if="canAddToCart(item)">{{ item.inventory - cartIdCount(item.id) }}개 남았습니다.</span>
                     <span v-else>품절!</span>
                 </div>
-            </li>
+            </li> -->
+            <ProductItem v-for="(item) in products" :key="item.id">
+                <template v-slot:image>
+                    <router-link :to="{name: 'Id', params: { item: item }}">
+                        <img :src="item.image" alt="">
+                    </router-link>
+                </template>
+                <template v-slot:title>
+                    <a href="#">{{ item.title }}</a>
+                </template>
+                <template v-slot:price>
+                    {{ item.price.toLocaleString() }}
+                </template>
+                <template v-slot:rating>
+                    <span v-for="n in 5" :key="n" :class="{ active: checkRating(n, item.rating) }">☆</span>
+                </template>
+                <template v-slot:actions>
+                    <button @click="addToCart(item.id)" v-if="canAddToCart(item)">
+                    <i class="fa-solid fa-cart-plus"></i>
+                    </button>
+                    <button disabled="true" v-else>
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    </button>
+                </template>
+                <template v-slot:inventory>
+                    <span v-if="canAddToCart(item)">
+                    {{ item.inventory - cartIdCount(item.id) }}개 남았습니다.
+                    </span>
+                    <span v-else>품절!</span>
+                </template>
+            </ProductItem>
         </transition-group>
     </div>
 </template>
 
 <script>
+    import ProductItem from "@/components/product/ProductItem.vue"
     export default {
+        components: {
+            ProductItem
+        },
         props:["title"],
         data(){
             return {
@@ -79,21 +113,21 @@
                return product.inventory > this.cartIdCount(product.id)
             }
         },
-        filters : {
-            formatPrice(price){   
-                if (!parseInt(price)) { return false }	
-                if (price > 999) {
-                    let priceString = String(price)
-                    let priceArray = priceString.split("").reverse()
-                    let index = 0 
-                    while (priceArray.length > index+3 ) {	
-                        priceArray.splice(index+3, 0, ",");	
-                        index += 4;	
-                    }
-                    return priceArray.reverse().join("")+"원"
-                }
-            }
-        }
+        // filters : {
+        //     formatPrice(price){   
+        //         if (!parseInt(price)) { return false }	
+        //         if (price > 999) {
+        //             let priceString = String(price)
+        //             let priceArray = priceString.split("").reverse()
+        //             let index = 0 
+        //             while (priceArray.length > index+3 ) {	
+        //                 priceArray.splice(index+3, 0, ",");	
+        //                 index += 4;	
+        //             }
+        //             return priceArray.reverse().join("")+"원"
+        //         }
+        //     }
+        // }
     }
 </script>
 

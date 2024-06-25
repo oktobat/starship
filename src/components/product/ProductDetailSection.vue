@@ -8,7 +8,7 @@
             <div class="info">
                 <p>이 상품의 아이디는 {{ product.id }}</p>
                 <p>카테고리 : {{ product.category }}</p>
-                <p>가격 : {{ product.price }}</p>
+                <p>가격 : {{ product.price.toLocaleString() }}</p>
                 <p>요약설명 : <span v-html="product.description"></span></p>
                 <p v-if="showBtn"><button type="button" @click="onClick">리뷰쓰기</button></p>
             </div>
@@ -25,7 +25,7 @@
             }
         },
         created(){
-            this.product = this.$store.getters.fnGetProducts.find(item=>item.id == this.$route.params.id)
+            this.product = this.$route.params.item
 
             if (this.$store.getters.fnGetLogined) {
                 this.showBtn = true

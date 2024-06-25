@@ -13,5 +13,5 @@ export default defineConfig({
     // 2. ProductDetailSection에 상세이미지 경로('/' -> '/리포지토리명/') 변경
     // 3. vite.config.js에서 publicPath 경로('/' -> '/리포지토리명') 변경
     // 4. build 후 dist 폴더에 있는 index.html의 /assets/~ 경로(. 추가) 변경 ./assets/~
-    publicPath : '/'
+    // publicPath : '/starMart'
 });

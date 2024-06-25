@@ -45,7 +45,8 @@
                 } 
                 this.$store.commit("fnLogin", {email:this.dEmail, pw:this.dPassword})
                 if (this.$store.getters.fnGetLogined) {
-                    this.$router.push("/")
+                    this.$router.push(this.$store.getters.fnGetPrevPath);
+                    this.$store.state.prevPath = null; // 이전 경로 초기화
                 } else {
                     alert("회원이 아닙니다.")
                 }
